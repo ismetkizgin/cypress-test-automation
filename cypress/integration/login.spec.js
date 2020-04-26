@@ -7,7 +7,7 @@ describe('Auth Routing Test', () => {
     })
 
     it('Should be sign in', () => {
-        cy.request('POST', '/login', userTestData)
+        cy.request('POST', Cypress.config().serveUrl + 'login', userTestData)
             .then((response) => {
                 const body = response.body;
                 expect(body).to.contain.property('status');
@@ -26,7 +26,7 @@ describe('Auth Routing Test', () => {
     });
 
     it('Should not login from the wrong user information', () => {
-        cy.request('POST', '/login', { UserIdentityNo: '123', UserPassword: 'asdasd' })
+        cy.request('POST', Cypress.config().serveUrl + 'login', { UserIdentityNo: '123', UserPassword: 'asdasd' })
             .then((response) => {
                 const body = response.body;
                 expect(body).to.contain.property('status');
@@ -38,7 +38,7 @@ describe('Auth Routing Test', () => {
     });
 
     it('Should not be logged in with missing information', () => {
-        cy.request('POST', '/login', { UserPassword: 'asdasd' })
+        cy.request('POST', Cypress.config().serveUrl + 'login', { UserPassword: 'asdasd' })
             .then((response) => {
                 const body = response.body;
                 expect(body).to.contain.property('status');
@@ -48,7 +48,7 @@ describe('Auth Routing Test', () => {
                 expect(body).not.to.contain.property('response');
             });
 
-        cy.request('POST', '/login', { UserIdentityNo: '123' })
+        cy.request('POST', Cypress.config().serveUrl + 'login', { UserIdentityNo: '123' })
             .then((response) => {
                 const body = response.body;
                 expect(body).to.contain.property('status');
